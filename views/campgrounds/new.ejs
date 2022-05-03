@@ -1,0 +1,72 @@
+<% layout('layout/boilerplate') %>
+
+
+<div class="row">
+	<h1 class="text-center">New Campground</h1>
+	<div class="col-6 offset-3">
+		<!-- <form action="/campgrounds" method="POST" novalidate> -->
+		<form action="/campgrounds" method="POST" novalidate class="needs-validation" enctype="multipart/form-data">
+			<div class="mb-3">
+				<label for="title" class="form-label">Title</label>
+				<input type="text" id="Title" name="campground[title]" class="form-control" required=>
+				<div class="invalid-feedback">
+					Please enter a title.
+				</div>
+			</div>
+			<div class="mb-3">
+				<label for="location" class="form-label">Location</label>
+				<input type="text" id="location" name="campground[location]" class="form-control" required>
+				<div class="invalid-feedback">
+					Please enter a location.
+				</div>
+			</div>
+
+			<div class="mb-3">
+				<label class="form-label">Choose Image(s)</label>
+				<div class="form-file custom-file">
+					<input class="form-control custom-file-input" type="file" id="image" name="image" multiple
+					onchange="previewMultiple(event)">
+					<label for="image" class="form-label custom-file-label mt-2" style="font-size: 0.8rem"></label>
+				</div>
+				<div id="formFile"></div>
+			</div>
+
+			<div class="mb-3">
+				<label for="price" class="form-label">Price</label>
+				<div class="input-group">
+					<span class="input-group-text" id="price-label">$</span>
+					<input type="text" class="form-control" placeholder="0.0" aria-label="Username" aria-describedby="basic-addon1" id="price" name="campground[price]" required>
+					<div class="invalid-feedback">
+						Please enter a price.
+					</div>
+				</div>
+
+			</div>
+
+			<div class="mb-3">
+				<label for="description" class="form-label">Description</label>
+				<textarea id="description" class="form-control" name="campground[description]" required></textarea>
+				<div class="invalid-feedback">
+					Please enter a description.
+				</div>
+			</div>
+
+
+
+			<div class="mb-3">
+				<button class="btn btn-dark">Add Campground</button>
+			</div>
+			
+		</form>
+
+		<footer>
+			<a href="/campgrounds">All Campgrounds</a>
+		</footer>
+
+	</div>
+</div>
+
+
+
+
+
