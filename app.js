@@ -7,20 +7,22 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const mongoose = require('mongoose');
-const Campground = require('./models/campground');
+const HistoricSite = require('./models/historicsite');
+const Memory = require('./models/memory');
 const methodOverride = require('method-override');
 const ejsMate = require('ejs-mate');
 const catchAsync = require('./utils/catchAsync');
 const ExpressError = require('./utils/ExpressError');
 const Joi = require('joi');
-const { campgroundSchema, reviewSchema } = require('./schema.js');
-const Review = require('./models/review');
-const campgrounds = require('./routes/campground');
-const reviews = require('./routes/review');
+const { historicsiteSchema, memorySchema } = require('./schema.js');
+const historicsites = require('./routes/historicsite');
+const memories = require('./routes/memory');
+
+
 const session = require('express-session');
 const flash = require('connect-flash');
 
-mongoose.connect('mongodb://localhost:27017/yelp-camp', {
+mongoose.connect('mongodb://localhost:27017/7th-ward', {
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
 	// useFindAndModify: false
@@ -59,8 +61,8 @@ app.use((req, res, next) => {
 })
 
 
-app.use('/campgrounds', campgrounds);
-app.use('/campgrounds/:id/reviews', reviews);
+app.use('/historicsites', historicsites);
+app.use('/historicsites/:id/memories', memories);
 
 app.get('/', (req, res) => {
 	res.render('home');
@@ -83,6 +85,6 @@ app.use((err, req, res, next) => {
 	res.status(statusCode).render('error', { err });
 })
 
-app.listen(3000, () => {
-	console.log('SERVING ON PORT 3000 ...');
+app.listen(5000, () => {
+	console.log('SERVING ON PORT 5000 ...');
 })

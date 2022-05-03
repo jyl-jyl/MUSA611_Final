@@ -1,0 +1,41 @@
+<% layout('layout/boilerplate') %>
+<h1>All Historic Sites</h1>
+<div class="mb-3">
+	<a href="/historicsites/new">Add New Site</a>
+</div>
+
+
+<% for (let historicsite of historicsites) { %>
+<div class="card mb-3" style="height: 18rem;">
+	<div class="row">
+		<div class="col-md-4">
+			<% if (historicsite.image.length) { %>
+			<img class="img-responsive" alt="" src="<%= historicsite.image[0].url %>" alt="Responsive image" style="height: 280px">
+
+
+			<% } else { %>
+			<img class="img-responsive" alt="" src="https://res.cloudinary.com/dgmbzj4cy/image/upload/v1651557417/MUSA-611-7th-Ward/walkingtour2_lo9gml.png" style="height: 280px">
+
+			<% } %>
+		</div>
+		<div class="col-md-8">
+			<div class="card-body">
+				<h5 class="card-title"><%= historicsite.name %></h5>
+				<h5 class="card-title"><%= historicsite.address %></h5>
+				<% if (historicsite.people.length) { %>
+				<span class="text-muted">Associated with: </span>
+				<p>
+					<% for (people of historicsite.people) { %> 
+					<small><%= people %> </small>
+					<% } %>
+				</p>
+				<% } %>
+
+				<a href="/historicsites/<%= historicsite._id %>" class="btn btn-primary">View <%= historicsite.name %></a>
+
+			</div>
+		</div>
+	</div>
+</div>
+<% } %>
+

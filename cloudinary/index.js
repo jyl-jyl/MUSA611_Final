@@ -10,7 +10,16 @@ cloudinary.config({
 const storage = new CloudinaryStorage({
 	cloudinary,
 	params: {
-		folder: 'YelpCamp',
+		folder: 'MUSA-611-7th-Ward',
+		allowedFormats: ['jpeg', 'png', 'jpg', 'bmp'],
+	}
+
+});
+
+const storage_memory = new CloudinaryStorage({
+	cloudinary,
+	params: {
+		folder: 'MUSA-611-7th-Ward_Memory',
 		allowedFormats: ['jpeg', 'png', 'jpg', 'bmp'],
 	}
 
@@ -19,6 +28,7 @@ const storage = new CloudinaryStorage({
 module.exports = {
 	cloudinary,
 	storage,
+	storage_memory,
 }
 
 
