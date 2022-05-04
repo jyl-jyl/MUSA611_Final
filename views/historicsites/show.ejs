@@ -1,5 +1,7 @@
 <% layout('layout/boilerplate') %>
 
+
+
 <div class="row">
 	<div class="col-6 mb-3">
 
@@ -25,12 +27,8 @@
 		</div>
 
 		<div class="card" style="width: 30rem;">
-<!-- 			<% for (let img of historicsite.image) { %>
-			<img class="card-img-top" src="<%= img.url %>" alt="Card image cap">
-			<% } %> -->
 			<div class="card-body">
 				<h5 class="card-title"><%= historicsite.name %></h5>
-
 				<% if (historicsite.people.length) { %>
 				<p class="card-text"> Associated with: 
 					<% for (p of historicsite.people) { %>
@@ -67,7 +65,7 @@
 
 
 	<div class="col-6 ps-5 mb-3">
-		<div id='map' style='width: 26rem; height: 300px;' class="mb-3"></div>
+		<div id='map' style='width: 40rem; height: 300px;' class="mb-3"></div>
 
 		<form action="/historicsites/<%= historicsite._id%>/memories" method="POST" novalidate class="needs-validation" enctype="multipart/form-data">
 			<h3 class="mt-3">Leave a Memory</h3>
@@ -98,8 +96,7 @@
 				</div>
 				<div id="formFile"></div>
 			</div>
-
-			<button class="btn btn-success mt-3">Post</button>
+			<button class="btn btn-success">Post</button>
 		</form>
 
 		<% for (let memory of historicsite.memories) { %>
@@ -109,16 +106,29 @@
 				<p class="card-text">Memory: <%= memory.story %></p>
 				<div>
 					<% for(let img of memory.image) { %>
-					<img src="<%= img.url %>" class="img-thumbnail" alt="...">
+					<img src="<%= img.url %>" class="w3-hover-opacity" alt="..." height="200" width="auto" onclick="onClick(this)">
 					<% } %>
 				</div>
+
+
+
+
 				<form action="/historicsites/<%= historicsite._id %>/memories/<%= memory._id %>?_method=DELETE" method="POST">
-					<button class="btn-sm btn-danger">Delete</button>
+					<button class="btn-sm btn-danger mt-3">Delete</button>
 				</form>
 			</div>
 
 		</div>
+		<center>
+			<div id="modal01" class="w3-modal w3-animate-zoom"  onclick="this.style.display='none'">
+				<span class="w3-button w3-hover-red w3-xlarge w3-display-topright">&times;</span>
+				<div>
+					<img id="img01" class="w3-modal-content center" style="width:50%">
+				</div>
+			</div>
+		</center>
 		<% } %>
+
 
 
 	</div>
@@ -127,14 +137,59 @@
 
 
 <script>
+
 	const mapToken = '<%- process.env.MAP_BOX_TOKEN %>';
 	const historicsite = <%- JSON.stringify(historicsite) %>;
 
 
-	
+
+
+
 </script>
 <script type="text/javascript" src="/js/showPageMap.js"></script>
+<script>
+	function onClick(element) {
+		document.getElementById("img01").src = element.src;
+		document.getElementById("modal01").style.display = "block";
+	}
+</script>
 
+<!-- <script>
+// iterate over all doc in collection 
+// const HistoricSite = require('../../models/historicsite');
+const populateMarker =  () => {
+	<%= JSON.stringify(arrayOfDocsHist) %>.forEach( (e) => {
+		let popup = new mapboxgl.Popup({ offset: 25 }).setHTML(`<h5>${e.name}</h5><p>${e.address}</p>`);
+		new mapboxgl.Marker()
+		.setLngLat(e.geometry.coordinates)
+		.setPopup(popup)
+		.addTo(map);
+	});
+};
+
+
+
+mapboxgl.accessToken = mapToken;
+const map = new mapboxgl.Map({
+container: 'map', // container ID
+style: 'mapbox://styles/mapbox/light-v10', // style URL
+center: historicsite.geometry.coordinates, // starting position [lng, lat]
+zoom: 15 // starting zoom
+});
+
+populateMarker();
+
+// create the popup for current site
+const popup = new mapboxgl.Popup({ offset: 25 }).setHTML(
+	`<h5>${historicsite.name}</h5><p>${historicsite.address}</p>`
+	);
+
+new mapboxgl.Marker({ "color": "#b40219" })
+.setLngLat(historicsite.geometry.coordinates)
+.setPopup(popup)
+.addTo(map);
+
+</script> -->
 
 
 

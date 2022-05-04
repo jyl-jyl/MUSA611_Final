@@ -13,6 +13,27 @@ const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
 const mapboxToken = process.env.MAP_BOX_TOKEN;
 const geocoder = mbxGeocoding({ accessToken: mapboxToken });
 
+
+
+// get an array of all object in database
+const arrayOfDocsHist = [];
+const pop = async () => {
+	for await (const myDoc of HistoricSite.find()) {
+		arrayOfDocsHist.push(myDoc);
+	}
+	console.log(arrayOfDocsHist);
+
+}
+pop();
+
+
+
+
+
+
+
+
+
 const validateHistoricsite = (req, res, next) => {
 	const { error } = historicsiteSchema.validate(req.body);
 	if (error) {
@@ -37,10 +58,10 @@ router.get('/new', (req, res) => {
 
 router.post('/', upload.array('image'), validateHistoricsite, catchAsync(async (req, res, next) => {
 	console.log(req.body);
-    const geoData = await geocoder.forwardGeocode({
-    	query: req.body.historicsite.address,
-    	limit: 1,
-    }).send();
+	const geoData = await geocoder.forwardGeocode({
+		query: req.body.historicsite.address,
+		limit: 1,
+	}).send();
 	const historicsite = new HistoricSite(req.body.historicsite);
 	historicsite.geometry = geoData.body.features[0].geometry;
 	historicsite.image = req.files.map(f => ({ url: f.path, filename: f.filename }));
@@ -60,7 +81,7 @@ router.get('/:id', catchAsync(async  (req, res) => {
 		req.flash('error', 'Cannot found that site!');
 		return res.redirect('/historicsites');
 	}
-	res.render('historicsites/show', { historicsite });
+	res.render('historicsites/show', { historicsite, arrayOfDocsHist });
 }))
 
 router.get('/:id/edit', catchAsync(async (req, res) => {
@@ -78,14 +99,14 @@ router.put('/:id', upload.array('image'), validateHistoricsite, catchAsync(async
 	const img = req.files.map(f => ({ url: f.path, filename: f.filename }));
 	await historicsite.image.push(...img);
 	await historicsite.save();
-    if (req.body.deleteImage) {
-    	for (let filename of req.body.deleteImage) {
-    		await cloudinary.uploader.destroy(filename);
-    	}
-    	await historicsite.updateOne({ $pull: { image: { filename: { $in: req.body.deleteImage }}}});
-    	console.log(historicsite);
+	if (req.body.deleteImage) {
+		for (let filename of req.body.deleteImage) {
+			await cloudinary.uploader.destroy(filename);
+		}
+		await historicsite.updateOne({ $pull: { image: { filename: { $in: req.body.deleteImage }}}});
+		console.log(historicsite);
 
-    }
+	}
 	req.flash('success', 'Successfully updated a new site!');
 
 	res.redirect(`/historicsites/${historicsite._id}`);
