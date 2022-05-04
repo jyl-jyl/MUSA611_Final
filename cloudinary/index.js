@@ -16,19 +16,11 @@ const storage = new CloudinaryStorage({
 
 });
 
-const storage_memory = new CloudinaryStorage({
-	cloudinary,
-	params: {
-		folder: 'MUSA-611-7th-Ward_Memory',
-		allowedFormats: ['jpeg', 'png', 'jpg', 'bmp'],
-	}
 
-});
 
 module.exports = {
 	cloudinary,
 	storage,
-	storage_memory,
 }
 
 

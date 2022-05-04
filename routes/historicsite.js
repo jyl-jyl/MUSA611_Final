@@ -36,6 +36,7 @@ router.get('/new', (req, res) => {
 })
 
 router.post('/', upload.array('image'), validateHistoricsite, catchAsync(async (req, res, next) => {
+	console.log(req.body);
     const geoData = await geocoder.forwardGeocode({
     	query: req.body.historicsite.address,
     	limit: 1,

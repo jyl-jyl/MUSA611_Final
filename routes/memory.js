@@ -6,13 +6,13 @@ const HistoricSite = require('../models/historicsite');
 const Memory = require('../models/memory');
 const Joi = require('joi');
 const { historicsiteSchema, memorySchema } = require('../schema.js');
-const { storage_memory, storage, cloudinary } = require('../cloudinary');
+const { storage, cloudinary } = require('../cloudinary');
 const multer = require('multer');
-const upload = multer({ storage_memory });
+const upload = multer({ storage });
 
 const validateMemory = (req, res, next) => {
 	console.log(req.body.memory);
-	const { error } = memorySchema.validate(req.body.memory);
+	const { error } = memorySchema.validate(req.body);
 	if(error) {
 		const msg = error.details.map(el => el.message).join(',');
 		throw new ExpressError(msg, 400);
@@ -23,7 +23,8 @@ const validateMemory = (req, res, next) => {
 
 
 
-router.post('/', upload.array('image'), validateMemory, catchAsync(async (req, res) => {
+router.post('/', upload.array('image'), catchAsync(async (req, res, next) => {
+	console.log(req.body);
 	const historicsite = await HistoricSite.findById(req.params.id);
 	const memory = new Memory(req.body.memory);
 	memory.image = req.files.map(f => ({ url: f.path, filename: f.filename }));

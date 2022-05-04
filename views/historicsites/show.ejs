@@ -69,7 +69,7 @@
 	<div class="col-6 ps-5 mb-3">
 		<div id='map' style='width: 26rem; height: 300px;' class="mb-3"></div>
 
-		<form action="/historicsites/<%= historicsite._id%>/memories" method="POST" novalidate class="needs-validation">
+		<form action="/historicsites/<%= historicsite._id%>/memories" method="POST" novalidate class="needs-validation" enctype="multipart/form-data">
 			<h3 class="mt-3">Leave a Memory</h3>
 			<div class="mb-3 mt-3">
 
@@ -93,8 +93,7 @@
 			<div class="mb-3">
 				<label class="form-label">Choose Image(s)</label>
 				<div class="form-file custom-file">
-					<input class="form-control custom-file-input" type="file" id="image" name="image" multiple
-					onchange="previewMultiple(event)">
+					<input class="form-control custom-file-input" type="file" id="image" name="image" multiple onchange="previewMultiple(event)">
 					<label for="image" class="form-label custom-file-label mt-2" style="font-size: 0.8rem"></label>
 				</div>
 				<div id="formFile"></div>
