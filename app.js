@@ -34,6 +34,12 @@ db.once('open', () => {
 	console.log('Database connected');
 });
 
+
+
+
+
+
+
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 // parse the body(url) of post request sent by form
@@ -41,6 +47,22 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.engine('ejs', ejsMate);
+
+
+
+// get an array of all object in database
+const arrayOfDocsHist = [];
+const pop = async () => {
+	for await (const myDoc of HistoricSite.find()) {
+		arrayOfDocsHist.push(myDoc);
+	}
+	console.log(arrayOfDocsHist);
+
+}
+pop();
+
+
+
 
 const sessionConfig = {
 	secret: 'thisshouldbebettersecret',
@@ -65,7 +87,7 @@ app.use('/historicsites', historicsites);
 app.use('/historicsites/:id/memories', memories);
 
 app.get('/', (req, res) => {
-	res.render('home');
+	res.render('home', { arrayOfDocsHist });
 })
 
 
