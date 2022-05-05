@@ -18,11 +18,16 @@ const { historicsiteSchema, memorySchema } = require('./schema.js');
 const historicsites = require('./routes/historicsite');
 const memories = require('./routes/memory');
 
-
 const session = require('express-session');
+
+const MongoStore = require('connect-mongo');
 const flash = require('connect-flash');
 
-mongoose.connect('mongodb://localhost:27017/7th-ward', {
+
+// const dbUrl = process.env.DB_URL;
+const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/7th-ward';
+
+mongoose.connect(dbUrl, {
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
 	// useFindAndModify: false
@@ -56,16 +61,25 @@ const pop = async () => {
 	for await (const myDoc of HistoricSite.find()) {
 		arrayOfDocsHist.push(myDoc);
 	}
-	console.log(arrayOfDocsHist);
-
 }
 pop();
 
 
+const secret = process.env.SECRET || 'thisshouldbebettersecret';
+const store = MongoStore.create({
+	mongoUrl: dbUrl,
+	secret,
+	touchAfter: 24 * 3600
+})
+
+store.on("error", function(e) {
+	console.log("SESSION STORE ERROR", e);
+})
 
 
 const sessionConfig = {
-	secret: 'thisshouldbebettersecret',
+	store,
+	secret,
 	resave: false,
 	saveUninitialized: true,
 	cookie: {

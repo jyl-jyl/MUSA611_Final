@@ -21,7 +21,6 @@ const pop = async () => {
 	for await (const myDoc of HistoricSite.find()) {
 		arrayOfDocsHist.push(myDoc);
 	}
-	console.log(arrayOfDocsHist);
 
 }
 pop();
