@@ -41,6 +41,7 @@ db.once('open', () => {
 });
 
 
+
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 // parse the body(url) of post request sent by form

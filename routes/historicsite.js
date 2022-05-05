@@ -96,6 +96,13 @@ router.put('/:id', upload.array('image'), validateHistoricsite, catchAsync(async
 	const { id } = req.params;
 	const historicsite = await HistoricSite.findByIdAndUpdate(id, { ...req.body.historicsite});
 	const img = req.files.map(f => ({ url: f.path, filename: f.filename }));
+	const geoData = await geocoder.forwardGeocode({
+		query: req.body.historicsite.address,
+		limit: 1,
+	}).send();
+	historicsite.geometry = geoData.body.features[0].geometry;
+
+
 	await historicsite.image.push(...img);
 	await historicsite.save();
 	if (req.body.deleteImage) {
