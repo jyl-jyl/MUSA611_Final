@@ -56,7 +56,7 @@ router.get('/new', (req, res) => {
 })
 
 router.post('/', upload.array('image'), validateHistoricsite, catchAsync(async (req, res, next) => {
-	console.log(req.body);
+	// console.log(req.body);
 	const geoData = await geocoder.forwardGeocode({
 		query: req.body.historicsite.address,
 		limit: 1,
@@ -66,7 +66,7 @@ router.post('/', upload.array('image'), validateHistoricsite, catchAsync(async (
 	historicsite.image = req.files.map(f => ({ url: f.path, filename: f.filename }));
 
 	await historicsite.save();
-	console.log(historicsite);
+	// console.log(historicsite);
 	req.flash('success', 'Successfully made a new historic site!');
 	res.redirect(`/historicsites/${historicsite._id}`);
 
@@ -110,7 +110,7 @@ router.put('/:id', upload.array('image'), validateHistoricsite, catchAsync(async
 			await cloudinary.uploader.destroy(filename);
 		}
 		await historicsite.updateOne({ $pull: { image: { filename: { $in: req.body.deleteImage }}}});
-		console.log(historicsite);
+		// console.log(historicsite);
 
 	}
 	req.flash('success', 'Successfully updated a new site!');
