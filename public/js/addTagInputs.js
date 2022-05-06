@@ -31,27 +31,26 @@ function addTags() {
 }
 
 input.addEventListener('keyup', (e) => {
-    if (e.key === 'Enter') {
-      e.target.value.split(',').forEach(tag => {
-        tags.push(tag);  
-      });
-      
-      addTags();
-      input.value = '';
+  if (e.key === 'Enter') {
+    e.target.value.split(',').forEach(tag => {
+      tags.push(tag);
+    });
+
+    addTags();
+    input.value = '';
 
 
-      hidden.value = tags;
-
-    }
+    hidden.value = tags;
+  }
 });
 document.addEventListener('click', (e) => {
   console.log(e.target.tagName);
   if (e.target.tagName === 'I') {
     const tagLabel = e.target.getAttribute('data-item');
     const index = tags.indexOf(tagLabel);
-    tags = [...tags.slice(0, index), ...tags.slice(index+1)];
-    addTags();    
+    tags = [...tags.slice(0, index), ...tags.slice(index + 1)];
+    addTags();
   }
-})
+});
 
 input.focus();
