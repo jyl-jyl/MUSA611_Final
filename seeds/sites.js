@@ -34,9 +34,9 @@ module.exports = [
       coordinates: [-75.15199823750112, 39.943540320891415],
     },
     people:
-	[
-	  'Richard Allen',
-	],
+  [
+    'Richard Allen',
+  ],
 
   },
 

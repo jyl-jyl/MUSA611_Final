@@ -7,7 +7,7 @@ const catchAsync = require('../utils/catchAsync');
 const ExpressError = require('../utils/ExpressError');
 const HistoricSite = require('../models/historicsite');
 const Memory = require('../models/memory');
-const { historicsiteSchema, memorySchema } = require('../schema.js');
+const { historicsiteSchema, memorySchema } = require('../schema');
 const { storage, cloudinary } = require('../cloudinary');
 
 const upload = multer({ storage });
@@ -34,6 +34,7 @@ router.post('/', upload.array('image'), catchAsync(async (req, res, next) => {
   await memory.save();
   await historicsite.save();
   req.flash('success', 'Created new memory!');
+  // eslint-disable-next-line no-underscore-dangle
   res.redirect(`/historicsites/${historicsite._id}`);
 }));
 

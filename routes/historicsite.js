@@ -1,3 +1,6 @@
+/* eslint consistent-return: off */
+
+
 const express = require('express');
 
 const router = express.Router({ mergeParams: true });
@@ -8,7 +11,7 @@ const catchAsync = require('../utils/catchAsync');
 const ExpressError = require('../utils/ExpressError');
 const HistoricSite = require('../models/historicsite');
 const Memory = require('../models/memory');
-const { historicsiteSchema, memorySchema } = require('../schema.js');
+const { historicsiteSchema, memorySchema } = require('../schema');
 const { storage_memory, storage, cloudinary } = require('../cloudinary');
 
 const upload = multer({ storage });
@@ -69,6 +72,7 @@ router.post('/', upload.array('image'), validateHistoricsite, catchAsync(async (
   await historicsite.save();
   // console.log(historicsite);
   req.flash('success', 'Successfully made a new historic site!');
+  // eslint-disable-next-line no-underscore-dangle
   res.redirect(`/historicsites/${historicsite._id}`);
 }));
 
@@ -107,13 +111,15 @@ router.put('/:id', upload.array('image'), validateHistoricsite, catchAsync(async
   await historicsite.save();
   if (req.body.deleteImage) {
     for (let filename of req.body.deleteImage) {
+      /* eslint-disable no-await-in-loop */
       await cloudinary.uploader.destroy(filename);
+      /* eslint-enable no-await-in-loop */
     }
     await historicsite.updateOne({ $pull: { image: { filename: { $in: req.body.deleteImage } } } });
     // console.log(historicsite);
   }
   req.flash('success', 'Successfully updated a new site!');
-
+  // eslint-disable-next-line no-underscore-dangle
   res.redirect(`/historicsites/${historicsite._id}`);
 }));
 

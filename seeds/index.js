@@ -27,7 +27,9 @@ const seedDB = async () => {
       people: sites[i].people,
 
     });
+    /* eslint-disable no-await-in-loop */
     await site.save();
+    /* eslint-enable no-await-in-loop */
   }
 };
 

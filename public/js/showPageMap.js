@@ -1,9 +1,18 @@
+/* global arrayOfDocsHist, historicsite, mapToken */
+mapboxgl.accessToken = mapToken;
+const map = new mapboxgl.Map({
+  container: 'map', // container ID
+  style: 'mapbox://styles/mapbox/light-v10', // style URL
+  center: historicsite.geometry.coordinates, // starting position [lng, lat]
+  zoom: 15 // starting zoom
+});
 
 const populateMarker =  () => {
   for (let object of arrayOfDocsHist) {
     const coor = object.geometry.coordinates;
     const { name } = object;
     const { address } = object;
+    // eslint-disable-next-line no-underscore-dangle
     const id = object._id;
     const html = `<a href="/historicsites/${id}"><h5>${name}</a></h5><p>${address}</p>`;
     let popup = new mapboxgl.Popup({ offset: 25 }).setHTML(html);
@@ -13,17 +22,6 @@ const populateMarker =  () => {
       .addTo(map);
   }
 };
-
-
-
-
-mapboxgl.accessToken = mapToken;
-const map = new mapboxgl.Map({
-  container: 'map', // container ID
-  style: 'mapbox://styles/mapbox/light-v10', // style URL
-  center: historicsite.geometry.coordinates, // starting position [lng, lat]
-  zoom: 15 // starting zoom
-});
 
 populateMarker();
 

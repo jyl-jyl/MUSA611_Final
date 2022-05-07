@@ -1,3 +1,4 @@
+/* global bsCustomFileInput */
 // Example starter JavaScript for disabling form submissions if there are invalid fields
 (function () {
   bsCustomFileInput.init();
@@ -8,13 +9,13 @@
     const forms = document.getElementsByClassName('needs-validation');
     // Loop over them and prevent submission
     var validation = Array.prototype.filter.call(forms, (form) => {
-        	form.addEventListener('submit', (event) => {
-        		if (form.checkValidity() === false) {
-        			event.preventDefault();
-        			event.stopPropagation();
-        		}
-        		form.classList.add('was-validated');
-        	}, false);
+      form.addEventListener('submit', (event) => {
+        if (form.checkValidity() === false) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        form.classList.add('was-validated');
+      }, false);
     });
   }, false);
 }());
