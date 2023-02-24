@@ -1,7 +1,7 @@
 ## Full-stack Web App for 7th Ward's Community-centered Historic Preservation
 
 Link to my website: https://desolate-caverns-02876.herokuapp.com/ 
-(The website is not working currently because Heroku have canceled their free tier plans, however, I have created a similar app for the community-centered historic preservation for Carbondale, PA and here is a demo: https://docs.google.com/presentation/d/1zdPQIho0lh3FhhKZFKCx3ihO2pgLaRAzAUME6g1OaNc/edit?usp=sharing)
+(The website is not working currently because Heroku have canceled their free tier plans, however, I have created a similar app for the community-centered historic preservation for Carbondale, PA and here is a demo: https://drive.google.com/file/d/1AIC2Jq3wQK2nJrsFEoR3I0exvfvC8Zl-/view?usp=share_link)
 
 ### Introduction: 
 The 7th ward is an area bounded by Spruce and South streets and extending from 7th Street to the Schuylkill River. The ward was the heart of Philadelphia’s black and immigrant communities at the end of 19th century and was well documented by Dubois in his commissioned research by the university of Pennsylvania. In 1899, the University published his groundbreaking book, *The Philadelphia Negro*. 
